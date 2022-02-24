@@ -1,71 +1,82 @@
 ---
-title: "A3: Incarceration"
+title: "Is the regional difference in incarceration rate real, and what can be the root cause of it if it exists?"
 output: html_document
 ---
 
-### Introduction
+### Introduction  
+>It is clear that there are some social norms which says that some regions are danger to live, which sometimes can be generalized and used as regional dispute and hatred.
+Through the analysis of incarceration rate in each region, I wanted to find out whether those social norms are backed by real numbers, and attempt to find out possible root cause of those numbers if exist.
+I believe it is important to be a critical thinker, and not simply following the norm and rather checking its credibility are part of the process of becoming a critical thinker.
 
 An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
 
 ### Summary Information
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+source("summary.R", local = knitr::knit_global())
 
-These will likely be calculated using your DPLYR skills, answering questions such as: 
+Midwest <- average_jail_percentage_by_region %>% filter(region == "Midwest") %>% pull(mean_jail_percentage)
+South <- average_jail_percentage_by_region %>% filter(region == "South") %>% pull(mean_jail_percentage)
 
-- What is the average value of my variable across all the counties (in the current year)?
-- Where is my variable the highest / lowest?
-- How much has my variable change over the last N years?
+Midwest_juvenile_mean <- juvenile_jail_percentage_data %>% filter(region == "Midwest") %>% pull(mean_juvenile_percentage)
+South_juvenile_mean <- juvenile_jail_percentage_data %>% filter(region == "South") %>% pull(mean_juvenile_percentage)
 
-Feel free to calculate and report values that you find relevant. Again, remember that the purpose is to think about how these measure of incarceration vary by race.
+Midwest_juvenile_max <- juvenile_jail_percentage_data %>% filter(region == "Midwest") %>% pull(max_juvenile_percentage)
+South_juvenile_mean <- juvenile_jail_percentage_data %>% filter(region == "South") %>% pull(max_juvenile_percentage)
+
+max_juvenile_year <- max_juvenile_year_data %>% filter(region == "Midwest") %>% pull(year)
+```
+
+> With the initial analysis of average percentage of people incarcerated in jail from 1970 to 2018, it is shown that Midwest has the lowest incarcerated percent of `r Midwest` % and South has the largest incarcerated percent of `r South` %.  
+After finding out that South region has significantly higher mean incarcerated percentage overtime, and it is even growing over time as shown in the chart below, I came up with the hypothesis that the incarcerated percentage of juveniles could be higher in Southern region than Midwest region.  
+Contrary to the hypothesis, Southern region has lower mean juvenile incarceration percentage of `r South_juvenile_mean` than that of Midwest region, `r Midwest_juvenile_mean` in the ASJ and COJ data from 1978 to 2018. One interesting founding is that both South and Midwest regions' maximum juvenile incarceration percentage happned in `r max_juvenile_year` on which the incarceration percentage increased more than 200% than that of previous year. Further research on that year might help us better understand juvenile incarceration percentage in Midwest and South regions.
 
 ### The Dataset
 
-Who collected the data?  
-How was the data collected or generated?  
-Why was the data collected?  
-How many observations (rows) are in your data?  
-How many features (columns) are in the data?  
-What, if any, ethical questions or questions of power do you need to consider when working with this data?  
-What are possible limitations or problems with this data?   (at least 200 words)
+> **Who collected the data?**  
+A. Bureau of Justice Statistic (BJS) which includes the Census of Jails (COJ) and Annual Survey of Jails (ASJ)
+
+> **How was the data collected or generated?**
+A. ASJ collects its data through the survey of samples in 950 local jails and COJ collects its data through census to nearly 3200 local jails.
+
+> **Why was the data collected?**  
+A. The data is collected in order to estimate the number and characteristics of inmates in local jails nationwide.
+
+> **How many observations (rows) are in your data?**  
+A. 153811 rows
+
+> **How many features (columns) are in the data?**  
+A. 121 columns
+
+> **What, if any, ethical questions or questions of power do you need to consider when working with this data?**  
+A. In what manner does the survey and census took place? Did it provide comfortable enough environments to inmates to provide logical/fact-based answers? 
+
+> **What are possible limitations or problems with this data?   (at least 200 words)**
+A. I certainly believe that the methodologies used in sampling inmates all over the nation were statistically appropriate. However, this does not necessarily prove that the resulting data can perfectly represent the entire population. Also, because of the fundamental nature of the prison, it is highly doubtful that entire sampling process has been done in un-biased and appropriate manner. It might be hard to take survey of those in high-security solitary confinement. It might be hard and costly to survey those in rural and rough environment. Also, the fact that inmates have no responsibility to answer the survey properly and there is no way to examine its appropriateness increase the liability to false data.  
+There are some problems even after assuming that the data has been collected as intended. The structure of the data itself, that it filters number of inmates in the categories of race and gender, is prone to be used in arguments that can cause racial and gender disputes. The fact that the number itself is true does not necessarily make the arguments based on the number true. For example, the higher number of male inmates than female inmates cannot be used in the argument something like males are eviller than females.
 
 
 ### Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The first chart that you will create and include will show the trend over time of your variable/topic. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - This may mean showing the same measure for different locations or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart1_example.R")}
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+region_jail_percentage_over_time_plot
 ```
+
+> The chart above shows the percent of inmates in population by regions (MidWest, Northeastm South, and West) from 1970 to 2018. Until 1990, it seems that Midwest and Northeast tend to move closely as well as South and West. However, after 1990, the average percent of inmates in population of South region increases more rapidly than that of Northeast, Midwest, and Westm eventually causing Southern regions to have highest percent of inmates. This chart clearly shows that the trend in percent of inmates varies by region, which indicates that there are some root causes that affected each region differently.
+
 
 ### Variable Comparison Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+juvenile_jail_percentage_plot
+```
 
-The second chart that you will create and include will show how two different (continuous) variables are related to one another. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
+> After finding out that the trend in percent of inmates varis by region, I suspected that the differenct cultures in young generation in each region might cause this difference, which I believed could be represented through the number of juvenile inmates for each region. The plot above compares the percent of juvenile inmates in all inmates of Midwest and South jails, which are the regions with lowest and highest average inmate percentage in population in order. When taking average juvenile inmate percentage from year between 1978 to 2018, it is higher in Midwest region, contrary to the hypothesis raised from previous chart. Though it is somewhat clear that there is an upward trend in the plot, which suggests that the percentage of juvenile inmates in Southern jails are getting comparably higher than that of Midwest jails. I beleive this could be a possible reason for rapid increase in percent of inmate in Southern regions after 1990.
 
 ### Map
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+juvenile_percentage_by_state_plot
+```
 
-The last chart that you will create and include will show how a variable is distributed geographically. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Your map needs a title
-- Your color scale needs a legend with a clear label
-- Use a map based coordinate system to set the aspect ratio of your map
-- Use a minimalist theme for the map 
+> When mapping out the percentage of juvenile in inmates for each states, it is hard to find a general trend by region. But it is clear that there were three states that  have higher juvenile percentage compared to other states: "North Dakota", "New York", and "Wyoming". Thus, it seems to be more appropriate to research more about why those three states have higher juvenile inmate percentage than other states, rather than to try find a general trend that can be applied to grouped regions like "South", "Midwest", "Northeast", and etc. In sum, the the number of incarceration and especially percentage of juveniles in inmates depends individually to each state. 
