@@ -8,8 +8,6 @@ output: html_document
 Through the analysis of incarceration rate in each region, I wanted to find out whether those social norms are backed by real numbers, and attempt to find out possible root cause of those numbers if exist.
 I believe it is important to be a critical thinker, and not simply following the norm and rather checking its credibility are part of the process of becoming a critical thinker.
 
-An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
-
 ### Summary Information
 
 ```{r, echo=FALSE, message = FALSE, warning = FALSE}
@@ -36,7 +34,7 @@ Contrary to the hypothesis, Southern region has lower mean juvenile incarceratio
 > **Who collected the data?**  
 A. Bureau of Justice Statistic (BJS) which includes the Census of Jails (COJ) and Annual Survey of Jails (ASJ)
 
-> **How was the data collected or generated?**
+> **How was the data collected or generated?**  
 A. ASJ collects its data through the survey of samples in 950 local jails and COJ collects its data through census to nearly 3200 local jails.
 
 > **Why was the data collected?**  
@@ -51,7 +49,7 @@ A. 121 columns
 > **What, if any, ethical questions or questions of power do you need to consider when working with this data?**  
 A. In what manner does the survey and census took place? Did it provide comfortable enough environments to inmates to provide logical/fact-based answers? 
 
-> **What are possible limitations or problems with this data?   (at least 200 words)**
+> **What are possible limitations or problems with this data?   (at least 200 words)**  
 A. I certainly believe that the methodologies used in sampling inmates all over the nation were statistically appropriate. However, this does not necessarily prove that the resulting data can perfectly represent the entire population. Also, because of the fundamental nature of the prison, it is highly doubtful that entire sampling process has been done in un-biased and appropriate manner. It might be hard to take survey of those in high-security solitary confinement. It might be hard and costly to survey those in rural and rough environment. Also, the fact that inmates have no responsibility to answer the survey properly and there is no way to examine its appropriateness increase the liability to false data.  
 There are some problems even after assuming that the data has been collected as intended. The structure of the data itself, that it filters number of inmates in the categories of race and gender, is prone to be used in arguments that can cause racial and gender disputes. The fact that the number itself is true does not necessarily make the arguments based on the number true. For example, the higher number of male inmates than female inmates cannot be used in the argument something like males are eviller than females.
 
